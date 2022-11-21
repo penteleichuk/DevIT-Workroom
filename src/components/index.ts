@@ -1,4 +1,4 @@
-import { ScreenContainer } from "./layout/ScreenContainer/ScreenContainer";
-import { AuthContainer } from "./layout/AuthContainer/AuthContainer";
+import { ScreenContainer } from "./containers/ScreenContainer/ScreenContainer";
+import { AuthContainer } from "./containers/AuthContainer/AuthContainer";
 
 export { ScreenContainer, AuthContainer };
