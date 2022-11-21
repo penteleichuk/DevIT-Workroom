@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native";
-import { CONTENT_HORIZONTAL_PADDING } from "../../../helpers/demensions";
+import { Demensions } from "../../../helpers";
 
 export const styles = StyleSheet.create({
   safeArea: { flex: 1 },
   container: {
-    paddingHorizontal: CONTENT_HORIZONTAL_PADDING,
+    paddingHorizontal: Demensions.CONTENT_HORIZONTAL_PADDING,
   },
 });
