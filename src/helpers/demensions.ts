@@ -21,3 +21,12 @@ export const { width: WIDTH, height: HEIGHT } = Dimensions.get("screen");
 
 // SIZE
 export const CONTENT_HORIZONTAL_PADDING = scale(32);
+
+// TEXT
+export const ACCENT_FONT_SIZE = scale(24);
+export const PRIMARY_FONT_SIZE = scale(14);
+export const SECONDARY_FONT_SIZE = scale(16);
+export const TERTIARY_FONT_SIZE = scale(18);
+
+// BORDER RADIUS
+export const BUTTON_RADIUS = scale(20);
