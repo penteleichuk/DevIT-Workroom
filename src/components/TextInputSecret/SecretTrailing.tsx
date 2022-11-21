@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Demensions } from "../../helpers";
 import * as Icons from "./../../assets/icons";
@@ -11,6 +11,14 @@ type SecretTrailingType = {
 export const SecretTrailing = (props: SecretTrailingType) => {
   const { show, setShow } = props;
 
+  const paramsIcon = useMemo(
+    () => ({
+      width: Demensions.scale(17),
+      height: Demensions.verticalScale(15),
+    }),
+    []
+  );
+
   const onPressHandler = useCallback(() => {
     setShow(!show);
   }, [show]);
@@ -18,15 +26,9 @@ export const SecretTrailing = (props: SecretTrailingType) => {
   return (
     <Pressable style={styles.wrapper} onPress={onPressHandler}>
       {show ? (
-        <Icons.EyeOn
-          width={Demensions.scale(17)}
-          height={Demensions.verticalScale(15)}
-        />
+        <Icons.EyeOn {...paramsIcon} />
       ) : (
-        <Icons.EyeOff
-          width={Demensions.scale(17)}
-          height={Demensions.verticalScale(15)}
-        />
+        <Icons.EyeOff {...paramsIcon} />
       )}
     </Pressable>
   );
