@@ -1,12 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { ScreenContainer } from "../components";
+import { View } from "react-native";
+import { Button, ScreenContainer, TextInput } from "../components";
 
 export const InitializationScreen = React.memo(() => {
   return (
     <ScreenContainer>
       <View>
-        <Text>Open up App.tsx to start working on your app!</Text>
+        <TextInput placeholder="Your Email" />
+        <TextInput placeholder="Password" />
+        <Button title="Log In" />
       </View>
     </ScreenContainer>
   );

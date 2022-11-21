@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, PressableProps } from "react-native";
+import { Pressable, PressableProps, Text } from "react-native";
 import { styles } from "./ButtonStyle";
 
 type ButtonType = PressableProps & {
@@ -11,7 +11,7 @@ export const Button = React.memo((props: ButtonType) => {
 
   return (
     <Pressable {...res} style={styles.button}>
-      {title}
+      <Text style={styles.text}>{title}</Text>
     </Pressable>
   );
 });

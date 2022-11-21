@@ -1,5 +1,6 @@
-import { ScreenContainer } from "./containers/ScreenContainer/ScreenContainer";
-import { AuthContainer } from "./containers/AuthContainer/AuthContainer";
-import { Button } from "./button/Button";
+import { ScreenContainer } from "./Containers/ScreenContainer/ScreenContainer";
+import { AuthContainer } from "./Containers/AuthContainer/AuthContainer";
+import { Button } from "./Button/Button";
+import { TextInput } from "./TextInput/TextInput";
 
-export { ScreenContainer, AuthContainer, Button };
+export { ScreenContainer, AuthContainer, Button, TextInput };
