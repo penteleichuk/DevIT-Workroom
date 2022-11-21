@@ -1,5 +1,4 @@
 import React from "react";
-import { View } from "react-native";
 import { InputStandard } from "react-native-input-outline";
 import { InputStandardProps } from "react-native-input-outline/src/components/InputStandard";
 import { Demensions } from "../../helpers";
