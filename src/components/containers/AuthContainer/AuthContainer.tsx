@@ -10,7 +10,7 @@ type AuthContainerType = {
 };
 
 export const AuthContainer = React.memo((props: AuthContainerType) => {
-  const { children, title, ...res } = props;
+  const { children, title } = props;
 
   return (
     <ScrollView

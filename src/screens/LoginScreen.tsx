@@ -9,61 +9,62 @@ import {
   PressableFade,
 } from "../components";
 import { useForm } from "react-hook-form";
-import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Demensions, Render } from "../helpers";
-import { registrationSchema } from "../validations/registration.validate";
+import { validationSchema } from "../validations/registration.validate";
+import { RootStackParamList } from "../routes/Navigation";
 
-export const LoginScreen = React.memo(
-  ({ navigation }: NativeStackHeaderProps) => {
-    const onPressRegistration = useCallback(() => {
-      navigation.replace("Registration");
-    }, [navigation]);
+type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
 
-    const { control, handleSubmit } = useForm({
-      defaultValues: {
-        email: "",
-        password: "",
-      },
-      resolver: yupResolver(registrationSchema),
-    });
+export const LoginScreen = ({ navigation }: LoginScreenProps) => {
+  const onPressRegistration = useCallback(() => {
+    navigation.replace("Registration");
+  }, [navigation]);
 
-    const onPressSubmit = (res: any) => {
-      console.log("submit", res);
-    };
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(validationSchema),
+  });
 
-    return (
-      <ScreenContainer>
-        <AuthContainer title="Log In To Workroom">
-          <View style={styles.forms}>
-            <TextInput
-              control={control}
-              name={"email"}
-              placeholder="Your Email"
-            />
-            <TextInputSecret
-              control={control}
-              name={"password"}
-              placeholder="Password"
-            />
-            <PressableFade onPress={() => {}}>
-              <Text style={styles.forgot}>Forgot password ?</Text>
+  const onPressSubmit = (res: any) => {
+    console.log("submit", res);
+  };
+
+  return (
+    <ScreenContainer>
+      <AuthContainer title="Log In To Workroom">
+        <View style={styles.forms}>
+          <TextInput
+            control={control}
+            name={"email"}
+            placeholder="Your Email"
+          />
+          <TextInputSecret
+            control={control}
+            name={"password"}
+            placeholder="Password"
+          />
+          <PressableFade onPress={() => {}}>
+            <Text style={styles.forgot}>Forgot password ?</Text>
+          </PressableFade>
+        </View>
+        <View style={styles.action}>
+          <Button title="Log In" onPress={handleSubmit(onPressSubmit)} />
+          <View style={styles.pressable}>
+            <Text style={styles.pressableInfo}>New User? </Text>
+            <PressableFade onPress={onPressRegistration}>
+              <Text style={styles.pressableLink}>Create Account</Text>
             </PressableFade>
           </View>
-          <View style={styles.action}>
-            <Button title="Log In" onPress={handleSubmit(onPressSubmit)} />
-            <View style={styles.pressable}>
-              <Text style={styles.pressableInfo}>New User? </Text>
-              <PressableFade onPress={onPressRegistration}>
-                <Text style={styles.pressableLink}>Create Account</Text>
-              </PressableFade>
-            </View>
-          </View>
-        </AuthContainer>
-      </ScreenContainer>
-    );
-  }
-);
+        </View>
+      </AuthContainer>
+    </ScreenContainer>
+  );
+};
 
 const styles = StyleSheet.create({
   forgot: {

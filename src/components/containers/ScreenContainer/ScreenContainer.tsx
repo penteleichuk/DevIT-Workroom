@@ -8,9 +8,7 @@ type ScreenContainerType = {
   children: React.ReactNode;
 };
 
-export const ScreenContainer = React.memo((props: ScreenContainerType) => {
-  const { children, ...res } = props;
-
+export const ScreenContainer = React.memo(({ children }: ScreenContainerType) => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea}>

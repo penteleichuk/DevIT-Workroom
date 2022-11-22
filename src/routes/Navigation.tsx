@@ -16,7 +16,14 @@ const stackOptions = {
   headerBackButtonMenuEnabled: false,
 };
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Initialization: undefined;
+  Registration: undefined;
+  Login: undefined;
+  Profile: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const Navigation = React.memo(() => {
   return (

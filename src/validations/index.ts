@@ -1,3 +1,3 @@
-import { registrationValidate } from "./registration.validate";
+import { validationSchema } from "./registration.validate";
 
-export { registrationValidate };
+export { validationSchema };

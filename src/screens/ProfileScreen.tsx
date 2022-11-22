@@ -4,15 +4,15 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, ProfileInfo, ScreenContainer, TextInput } from "../components";
 import { Demensions, Render } from "../helpers";
-import { registrationSchema } from "../validations/registration.validate";
+import { validationSchema } from "../validations/registration.validate";
 
-export const ProfileScreen = React.memo(() => {
+export const ProfileScreen = () => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
-    resolver: yupResolver(registrationSchema),
+    resolver: yupResolver(validationSchema),
   });
 
   const onPressSubmit = (res: any) => {
@@ -45,7 +45,7 @@ export const ProfileScreen = React.memo(() => {
       </ScrollView>
     </ScreenContainer>
   );
-});
+};
 
 const styles = StyleSheet.create({
   forgot: {

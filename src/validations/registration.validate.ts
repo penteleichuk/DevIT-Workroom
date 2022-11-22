@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import "yup-phone";
 
-export const registrationSchema = Yup.object().shape({
+export const validationSchema = Yup.object().shape({
   phone: Yup.string().required("Phone is required").phone(),
   code: Yup.string()
     .required("Code is required")
