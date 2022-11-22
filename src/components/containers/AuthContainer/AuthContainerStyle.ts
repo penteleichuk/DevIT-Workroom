@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     justifyContent: "space-between",
-    height: "33%",
+    height: Demensions.moderateScale(230),
   },
   title: {
     fontSize: Demensions.ACCENT_FONT_SIZE,

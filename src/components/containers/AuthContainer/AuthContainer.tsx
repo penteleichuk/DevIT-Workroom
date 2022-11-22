@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { styles } from "./AuthContainerStyle";
 import * as Icons from "./../../../assets/icons";
 import { Demensions } from "../../../helpers";
@@ -13,7 +13,13 @@ export const AuthContainer = React.memo((props: AuthContainerType) => {
   const { children, title, ...res } = props;
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      bounces={false}
+      showsVerticalScrollIndicator={false}
+      automaticallyAdjustKeyboardInsets={true}
+      style={styles.container}
+      contentContainerStyle={{ paddingBottom: 50 }}
+    >
       <View style={styles.header}>
         <Icons.Logo
           widt={Demensions.scale(67)}
@@ -22,6 +28,6 @@ export const AuthContainer = React.memo((props: AuthContainerType) => {
         <Text style={styles.title}>{title}</Text>
       </View>
       <View style={styles.container}>{children}</View>
-    </View>
+    </ScrollView>
   );
 });

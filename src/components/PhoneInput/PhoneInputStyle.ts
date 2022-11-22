@@ -4,6 +4,12 @@ import { Demensions, Render } from "../../helpers";
 export const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: Render.COLOR_BACKGROUND,
+    height: Demensions.verticalScale(40),
+  },
+  placeholder: {
+    marginTop: Demensions.verticalScale(40),
+    marginBottom: Demensions.verticalScale(15),
+    color: Render.COLOR_INPUT,
   },
   textInputStyle: {
     color: Render.COLOR_INPUT,
