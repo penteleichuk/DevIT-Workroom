@@ -6,14 +6,14 @@ import { SecretTrailing } from "./SecretTrailing";
 type TextInputSecretType = InputStandardProps & {};
 
 export const TextInputSecret = React.memo((props: TextInputSecretType) => {
-  const { ...res } = props;
+  const { secureTextEntry, trailingIcon, ...res } = props;
   const [show, setShow] = useState<boolean>(false);
 
   return (
     <TextInput
-      {...res}
       secureTextEntry={show}
       trailingIcon={() => <SecretTrailing show={show} setShow={setShow} />}
+      {...res}
     />
   );
 });

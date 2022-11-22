@@ -11,7 +11,7 @@ type SecretTrailingType = {
 export const SecretTrailing = (props: SecretTrailingType) => {
   const { show, setShow } = props;
 
-  const paramsIcon = useMemo(
+  const iconOptions = useMemo(
     () => ({
       width: Demensions.scale(17),
       height: Demensions.verticalScale(15),
@@ -26,9 +26,9 @@ export const SecretTrailing = (props: SecretTrailingType) => {
   return (
     <Pressable style={styles.wrapper} onPress={onPressHandler}>
       {show ? (
-        <Icons.EyeOn {...paramsIcon} />
+        <Icons.EyeOn {...iconOptions} />
       ) : (
-        <Icons.EyeOff {...paramsIcon} />
+        <Icons.EyeOff {...iconOptions} />
       )}
     </Pressable>
   );
