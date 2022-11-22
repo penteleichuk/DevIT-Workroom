@@ -8,8 +8,11 @@ import {
   Button,
   PressableFade,
 } from "../components";
-import { Demensions, Render } from "../helpers";
+import { useForm } from "react-hook-form";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Demensions, Render } from "../helpers";
+import { registrationSchema } from "../validations/registration.validate";
 
 export const LoginScreen = React.memo(
   ({ navigation }: NativeStackHeaderProps) => {
@@ -17,18 +20,38 @@ export const LoginScreen = React.memo(
       navigation.replace("Registration");
     }, [navigation]);
 
+    const { control, handleSubmit } = useForm({
+      defaultValues: {
+        email: "",
+        password: "",
+      },
+      resolver: yupResolver(registrationSchema),
+    });
+
+    const onPressSubmit = (res: any) => {
+      console.log("submit", res);
+    };
+
     return (
       <ScreenContainer>
         <AuthContainer title="Log In To Workroom">
           <View style={styles.forms}>
-            <TextInput placeholder="Your Email" />
-            <TextInputSecret placeholder="Password" />
+            <TextInput
+              control={control}
+              name={"email"}
+              placeholder="Your Email"
+            />
+            <TextInputSecret
+              control={control}
+              name={"password"}
+              placeholder="Password"
+            />
             <PressableFade onPress={() => {}}>
               <Text style={styles.forgot}>Forgot password ?</Text>
             </PressableFade>
           </View>
           <View style={styles.action}>
-            <Button title="Log In" />
+            <Button title="Log In" onPress={handleSubmit(onPressSubmit)} />
             <View style={styles.pressable}>
               <Text style={styles.pressableInfo}>New User? </Text>
               <PressableFade onPress={onPressRegistration}>

@@ -1,9 +1,24 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { View, StyleSheet, ScrollView } from "react-native";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, ProfileInfo, ScreenContainer, TextInput } from "../components";
 import { Demensions, Render } from "../helpers";
+import { registrationSchema } from "../validations/registration.validate";
 
 export const ProfileScreen = React.memo(() => {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(registrationSchema),
+  });
+
+  const onPressSubmit = (res: any) => {
+    console.log("submit", res);
+  };
+
   return (
     <ScreenContainer>
       <ScrollView
@@ -14,14 +29,18 @@ export const ProfileScreen = React.memo(() => {
       >
         <ProfileInfo />
         <View style={styles.forms}>
-          <TextInput placeholder="Name" />
-          <TextInput placeholder="Email" />
-          <TextInput placeholder="Phone" />
-          <TextInput placeholder="Position" />
-          <TextInput placeholder="Skype" />
+          <TextInput control={control} name={"name"} placeholder="Name" />
+          <TextInput control={control} name={"email"} placeholder="Email" />
+          <TextInput control={control} name={"phone"} placeholder="Phone" />
+          <TextInput
+            control={control}
+            name={"position"}
+            placeholder="Position"
+          />
+          <TextInput control={control} name={"skype"} placeholder="Skype" />
         </View>
         <View style={styles.action}>
-          <Button title="Log In" />
+          <Button title="Log In" onPress={handleSubmit(onPressSubmit)} />
         </View>
       </ScrollView>
     </ScreenContainer>

@@ -1,5 +1,5 @@
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import {
   ScreenContainer,
@@ -8,44 +8,74 @@ import {
   TextInputSecret,
   PressableFade,
   Button,
-  PhoneInput,
   CodeInput,
+  PhoneInput,
 } from "../components";
 import { Demensions, Render } from "../helpers";
+import { useForm } from "react-hook-form";
+import { registrationSchema } from "../validations/registration.validate";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const RegistrationScreen = React.memo(
   ({ navigation }: NativeStackHeaderProps) => {
-    const [number, setNumber] = useState("");
-    const [validValue, setValidValue] = useState(false);
-    const [value, setValue] = useState("");
-
     const onPressRegistration = useCallback(() => {
       navigation.replace("Login");
-    }, [navigation]);
+    }, []);
+
+    const { control, handleSubmit } = useForm({
+      defaultValues: {
+        phone: "",
+        code: "",
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+      resolver: yupResolver(registrationSchema),
+    });
+
+    const onPressSubmit = (res: any) => {
+      console.log("submit", res);
+    };
 
     return (
       <ScreenContainer>
         <AuthContainer title={"Sing Up To Workroom"}>
           <View style={styles.forms}>
             <PhoneInput
+              control={control}
+              name={"phone"}
               placeholder="Phone Number"
-              value={number}
-              setValue={setNumber}
-              setValidValue={setValidValue}
             />
-            <CodeInput placeholder={"Code"} value={value} setValue={setValue} />
-            <TextInput placeholder="Your Name" />
-            <TextInput placeholder="Your Email" />
-            <TextInputSecret placeholder="Password" />
-            <TextInputSecret placeholder="Confirm Password" />
-          </View>
-          <View style={styles.action}>
-            <Button title="Next" />
-            <View style={styles.pressable}>
-              <Text style={styles.pressableInfo}>Have Account? </Text>
-              <PressableFade onPress={onPressRegistration}>
-                <Text style={styles.pressableLink}>Log In</Text>
-              </PressableFade>
+            <CodeInput control={control} name={"code"} placeholder="Code" />
+            <TextInput
+              control={control}
+              name={"name"}
+              placeholder="Your Name"
+            />
+            <TextInput
+              control={control}
+              name={"email"}
+              placeholder="Your Email"
+            />
+            <TextInputSecret
+              control={control}
+              name={"password"}
+              placeholder="Password"
+            />
+            <TextInputSecret
+              control={control}
+              name={"confirmPassword"}
+              placeholder="Confirm Password"
+            />
+            <View style={styles.action}>
+              <Button title="Next" onPress={handleSubmit(onPressSubmit)} />
+              <View style={styles.pressable}>
+                <Text style={styles.pressableInfo}>Have Account? </Text>
+                <PressableFade onPress={onPressRegistration}>
+                  <Text style={styles.pressableLink}>Log In</Text>
+                </PressableFade>
+              </View>
             </View>
           </View>
         </AuthContainer>

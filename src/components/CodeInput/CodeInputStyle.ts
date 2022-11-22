@@ -20,8 +20,18 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     fontWeight: "500",
   },
+  cellError: {
+    borderColor: "red",
+  },
   focusCell: {
     borderColor: "#FFC612",
     color: "#1F1D1D",
+  },
+  error: {
+    marginTop: 5,
+    fontSize: 10,
+  },
+  errorColor: {
+    color: "red",
   },
 });

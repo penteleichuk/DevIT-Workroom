@@ -33,4 +33,14 @@ export const styles = StyleSheet.create({
     borderRadius: 15,
     marginLeft: Demensions.scale(25),
   },
+  error: {
+    marginTop: 5,
+    fontSize: 10,
+  },
+  errorColor: {
+    color: "red",
+  },
+  errorBorder: {
+    borderColor: "red",
+  },
 });
