@@ -3,6 +3,6 @@ import { Demensions } from "../../helpers";
 
 export const styles = StyleSheet.create({
   input: {
-    marginTop: 20,
+    marginTop: Demensions.verticalScale(40),
   },
 });

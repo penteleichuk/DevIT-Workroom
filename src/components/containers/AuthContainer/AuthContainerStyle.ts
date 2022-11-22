@@ -1,6 +1,15 @@
 import { StyleSheet } from "react-native";
+import { Demensions } from "../../../helpers";
 
 export const styles = StyleSheet.create({
-  safeArea: {flex: 1},
-  container: {},
+  container: { flex: 1 },
+  header: {
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: "33%",
+  },
+  title: {
+    fontSize: Demensions.ACCENT_FONT_SIZE,
+    fontWeight: "500",
+  },
 });

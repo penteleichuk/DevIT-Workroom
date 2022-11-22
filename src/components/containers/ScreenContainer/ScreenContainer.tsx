@@ -14,10 +14,8 @@ export const ScreenContainer = React.memo((props: ScreenContainerType) => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-          <StatusBar style="auto" />
-          {children}
-        </View>
+        <StatusBar style="auto" />
+        <View style={styles.container}>{children}</View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

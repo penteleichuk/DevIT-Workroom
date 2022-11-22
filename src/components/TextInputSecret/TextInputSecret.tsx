@@ -7,7 +7,7 @@ type TextInputSecretType = InputStandardProps & {};
 
 export const TextInputSecret = React.memo((props: TextInputSecretType) => {
   const { secureTextEntry, trailingIcon, ...res } = props;
-  const [show, setShow] = useState<boolean>(false);
+  const [show, setShow] = useState<boolean>(true);
 
   return (
     <TextInput
