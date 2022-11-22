@@ -5,6 +5,7 @@ import { TextInput } from "./TextInput/TextInput";
 import { TextInputSecret } from "./TextInputSecret/TextInputSecret";
 import { CodeInput } from "./CodeInput/CodeInput";
 import { PhoneInput } from "./PhoneInput/PhoneInput";
+import { PressableFade } from "./PressableFade/PressableFade";
 
 export {
   ScreenContainer,
@@ -14,4 +15,5 @@ export {
   TextInputSecret,
   CodeInput,
   PhoneInput,
+  PressableFade,
 };

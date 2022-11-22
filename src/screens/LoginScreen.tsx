@@ -1,11 +1,12 @@
 import React from "react";
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import {
   AuthContainer,
   ScreenContainer,
   TextInput,
   TextInputSecret,
   Button,
+  PressableFade,
 } from "../components";
 import { Demensions, Render } from "../helpers";
 
@@ -16,17 +17,17 @@ export const LoginScreen = React.memo(() => {
         <View style={styles.form}>
           <TextInput placeholder="Your Email" />
           <TextInputSecret placeholder="Password" />
-          <Pressable>
+          <PressableFade onPress={() => {}}>
             <Text style={styles.forgot}>Forgot password ?</Text>
-          </Pressable>
+          </PressableFade>
         </View>
         <View style={styles.action}>
           <Button title="Log In" />
           <View style={styles.pressable}>
             <Text style={styles.pressableInfo}>New User? </Text>
-            <Pressable>
+            <PressableFade>
               <Text style={styles.pressableLink}>Create Account</Text>
-            </Pressable>
+            </PressableFade>
           </View>
         </View>
       </AuthContainer>
