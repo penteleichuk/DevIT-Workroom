@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
-import { styles } from "./CodeInputConfirmationStyle";
+import { styles } from "./CodeInputStyle";
 import {
   CodeField,
   Cursor,
@@ -14,9 +14,9 @@ type CodeInputType = {
   cellCount?: number;
 };
 
-export const CodeInputConfirmation = React.memo((props: CodeInputType) => {
+export const CodeInput = React.memo((props: CodeInputType) => {
   const { value, setValue, cellCount = 4 } = props;
-  const ref = useBlurOnFulfill({ value, cellCount: cellCount });
+  const ref = useBlurOnFulfill({ value, cellCount });
 
   const [onPressOut, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
