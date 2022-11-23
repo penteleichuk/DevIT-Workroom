@@ -8,13 +8,15 @@ type ScreenContainerType = {
   children: React.ReactNode;
 };
 
-export const ScreenContainer = React.memo(({ children }: ScreenContainerType) => {
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.safeArea}>
-        <StatusBar style="auto" />
-        <View style={styles.container}>{children}</View>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
-});
+export const ScreenContainer = React.memo(
+  ({ children }: ScreenContainerType) => {
+    return (
+      <SafeAreaProvider>
+        <SafeAreaView style={styles.safeArea}>
+          <StatusBar style="auto" />
+          <View style={styles.container}>{children}</View>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    );
+  }
+);

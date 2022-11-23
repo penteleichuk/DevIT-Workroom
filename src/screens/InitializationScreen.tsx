@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { AuthContainer, ScreenContainer } from "../components";
 import { RootStackParamList } from "../routes/Navigation";
 import { Database } from "../services/database";
