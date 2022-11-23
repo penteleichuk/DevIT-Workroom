@@ -14,13 +14,23 @@ import {
   PhoneInput,
 } from "../components";
 import { Demensions, Render } from "../helpers";
-import { validationSchema } from "../validations/registration.validate";
+import { registrationSchema } from "../validations/registration.validate";
 import { RootStackParamList } from "../routes/Navigation";
+import { Database } from "../services/database";
 
 type RegistrationScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "Registration"
 >;
+
+type RegSubmitType = {
+  phone: string;
+  code: string;
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 export const RegistrationScreen = ({ navigation }: RegistrationScreenProps) => {
   const onPressRegistration = useCallback(() => {
@@ -36,11 +46,19 @@ export const RegistrationScreen = ({ navigation }: RegistrationScreenProps) => {
       password: "",
       confirmPassword: "",
     },
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(registrationSchema),
   });
 
-  const onPressSubmit = (res: any) => {
-    console.log("submit", res);
+  const onPressSubmit = (res: RegSubmitType) => {
+    const { confirmPassword, code, ...params } = res;
+
+    Database.registration({ ...params })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

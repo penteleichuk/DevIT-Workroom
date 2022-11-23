@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useCallback, useState } from "react";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import {
   AuthContainer,
   ScreenContainer,
@@ -14,16 +14,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Demensions, Render } from "../helpers";
 import { RootStackParamList } from "../routes/Navigation";
 import { authSchema } from "../validations/auth.validate";
-import { Database, LoginRequestType } from "../services/database";
+import { Database, LoginRequestType, UserType } from "../services/database";
+import { Storage } from "../services/storage";
 
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
 
 export const LoginScreen = ({ navigation }: LoginScreenProps) => {
-  const onPressRegistration = useCallback(() => {
-    navigation.replace("Registration");
-  }, [navigation]);
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { control, handleSubmit } = useForm({
+  // HOOK form
+  const { control, handleSubmit, resetField } = useForm({
     defaultValues: {
       email: "",
       password: "",
@@ -31,13 +32,27 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
     resolver: yupResolver(authSchema),
   });
 
+  // Nav to reg
+  const onPressRegistration = useCallback(() => {
+    navigation.replace("Registration");
+  }, [navigation]);
+
+  // Log in
   const onPressSubmit = (res: LoginRequestType) => {
+    setIsLoading(true);
+    setError("");
     Database.login({ ...res })
       .then((res) => {
-        console.log(res);
+        Storage.setUser(res as UserType).then(() => {
+          navigation.replace("Profile");
+        });
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
+        resetField("password");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -46,11 +61,13 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
       <AuthContainer title="Log In To Workroom">
         <View style={styles.forms}>
           <TextInput
+            editable={!isLoading}
             control={control}
             name={"email"}
             placeholder="Your Email"
           />
           <TextInputSecret
+            editable={!isLoading}
             control={control}
             name={"password"}
             placeholder="Password"
@@ -59,8 +76,14 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
             <Text style={styles.forgot}>Forgot password ?</Text>
           </PressableFade>
         </View>
+        {isLoading && <ActivityIndicator size="small" />}
         <View style={styles.action}>
-          <Button title="Log In" onPress={handleSubmit(onPressSubmit)} />
+          {error && <Text>{error}</Text>}
+          <Button
+            title="Log In"
+            disabled={isLoading}
+            onPress={handleSubmit(onPressSubmit)}
+          />
           <View style={styles.pressable}>
             <Text style={styles.pressableInfo}>New User? </Text>
             <PressableFade onPress={onPressRegistration}>

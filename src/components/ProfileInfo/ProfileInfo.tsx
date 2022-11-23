@@ -4,14 +4,25 @@ import { styles } from "./ProfileInfoStyle";
 import * as Images from "./../../assets/images";
 import * as Icons from "./../../assets/icons";
 import { Demensions } from "../../helpers";
+import { PressableFade } from "../PressableFade/PressableFade";
 
-export const ProfileInfo = React.memo(() => {
+type ProfileInfoType = {
+  name: string;
+  position: string;
+  logout: () => void;
+};
+
+export const ProfileInfo = React.memo((props: ProfileInfoType) => {
+  const { name, position, logout } = props;
+
   return (
     <View style={styles.profile}>
       <View style={styles.header}>
         <Text style={styles.headerItem}></Text>
         <Text style={styles.headerItem}>Edit Profile</Text>
-        <Text style={[styles.headerItem, styles.headerLogout]}>Log Out</Text>
+        <PressableFade style={[styles.headerItem]} onPress={logout}>
+          <Text style={styles.headerLogout}>Log Out</Text>
+        </PressableFade>
       </View>
       <View style={styles.avatar}>
         <Image style={styles.avatarImage} source={Images.Photo} />
@@ -22,8 +33,8 @@ export const ProfileInfo = React.memo(() => {
           />
         </View>
       </View>
-      <Text style={styles.name}>Mike Tyson</Text>
-      <Text style={styles.position}>UI/UX Designer</Text>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.position}>{position}</Text>
     </View>
   );
 });

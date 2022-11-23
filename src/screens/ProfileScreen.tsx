@@ -1,23 +1,50 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, ProfileInfo, ScreenContainer, TextInput } from "../components";
 import { Demensions, Render } from "../helpers";
-import { validationSchema } from "../validations/registration.validate";
+import { userSchema } from "../validations/user.validate";
+import { Storage } from "../services/storage";
+import { UserType } from "../services/database";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../routes/Navigation";
 
-export const ProfileScreen = () => {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    resolver: yupResolver(validationSchema),
+type ProfileScreenProps = NativeStackScreenProps<RootStackParamList, "Profile">;
+
+export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<UserType>({} as UserType);
+
+  // HOOK form
+  const { control, handleSubmit, reset } = useForm({
+    resolver: yupResolver(userSchema),
   });
 
-  const onPressSubmit = (res: any) => {
+  // Init user data
+  useEffect(() => {
+    Storage.getUser().then((res) => {
+      setUser({ ...res });
+      reset({ ...res });
+    });
+  }, []);
+
+  // Save user data
+  const onPressSubmit = useCallback((res: any) => {
     console.log("submit", res);
-  };
+  }, []);
+
+  // Logout
+  const onPressLogout = useCallback(() => {
+    setIsLoading(true);
+    Storage.removeUser()
+      .then(() => {
+        navigation.push("Login");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <ScreenContainer>
@@ -27,7 +54,11 @@ export const ProfileScreen = () => {
         automaticallyAdjustKeyboardInsets={true}
         contentContainerStyle={{ paddingBottom: 50 }}
       >
-        <ProfileInfo />
+        <ProfileInfo
+          name={user.name}
+          position={user.position || "..."}
+          logout={onPressLogout}
+        />
         <View style={styles.forms}>
           <TextInput control={control} name={"name"} placeholder="Name" />
           <TextInput control={control} name={"email"} placeholder="Email" />
@@ -40,7 +71,11 @@ export const ProfileScreen = () => {
           <TextInput control={control} name={"skype"} placeholder="Skype" />
         </View>
         <View style={styles.action}>
-          <Button title="Log In" onPress={handleSubmit(onPressSubmit)} />
+          <Button
+            disabled={isLoading}
+            title="Save"
+            onPress={handleSubmit(onPressSubmit)}
+          />
         </View>
       </ScrollView>
     </ScreenContainer>

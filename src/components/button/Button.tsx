@@ -11,7 +11,10 @@ export const Button = React.memo((props: ButtonType) => {
   const { title, ...res } = props;
 
   return (
-    <PressableFade {...res} style={styles.button}>
+    <PressableFade
+      {...res}
+      style={[styles.button, res.disabled && { opacity: 0.5 }]}
+    >
       <Text style={styles.text}>{title}</Text>
     </PressableFade>
   );
