@@ -29,7 +29,7 @@ export const Navigation = React.memo(() => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Profile"
+        initialRouteName="Initialization"
         screenOptions={{ ...screenOptions }}
       >
         <Stack.Screen

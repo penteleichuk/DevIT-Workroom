@@ -12,8 +12,9 @@ import { useForm } from "react-hook-form";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Demensions, Render } from "../helpers";
-import { validationSchema } from "../validations/registration.validate";
 import { RootStackParamList } from "../routes/Navigation";
+import { authSchema } from "../validations/auth.validate";
+import { Database, LoginRequestType } from "../services/database";
 
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -27,11 +28,17 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
       email: "",
       password: "",
     },
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(authSchema),
   });
 
-  const onPressSubmit = (res: any) => {
-    console.log("submit", res);
+  const onPressSubmit = (res: LoginRequestType) => {
+    Database.login({ ...res })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
