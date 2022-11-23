@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-const db = SQLite.openDatabase("db.rooms");
+const db = SQLite.openDatabase("db.local");
 
 export const Database = {
   createTabel() {
@@ -7,7 +7,7 @@ export const Database = {
       db.transaction(
         (tx) => {
           tx.executeSql(
-            "CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(40) NOT NULL default '0', position varchar(35) NOT NULL default '', email varchar(50) UNIQUE, password varchar(36)  NULL, phone  varchar(35) NOT NULL default '', skype varchar(19) NOT NULL default '')"
+            "CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar(40) NOT NULL default '0', position varchar(35) NOT NULL default '', email varchar(50) UNIQUE, password varchar(36)  NULL, phone  varchar(35) NOT NULL default '', skype varchar(19) NOT NULL default '', image varchar NOT NULL default '')"
           );
 
           resolve("success");
@@ -89,6 +89,22 @@ export const Database = {
       });
     });
   },
+  updatePhoto(id: number, image: string) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "UPDATE users SET image = ? WHERE id = ?",
+          [image, id],
+          () => {
+            this.me(id).then((res) => {
+              resolve(res);
+            });
+          },
+          (_, error): boolean | any => reject(error)
+        );
+      });
+    });
+  },
 };
 
 export type LoginRequestType = {
@@ -98,6 +114,7 @@ export type LoginRequestType = {
 
 export type UserType = RegistrationRequestType & {
   id: number;
+  image: string | undefined;
   skype: string | undefined;
   position: string | undefined;
 };

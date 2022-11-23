@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     lineHeight: 48,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: "#D7D7D7",
+    borderColor: Render.COLOR_BORDER,
     textAlign: "center",
     borderRadius: 15,
     fontWeight: "500",

@@ -68,7 +68,9 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
         contentContainerStyle={{ paddingBottom: 50 }}
       >
         <ProfileInfo
+          id={user.id}
           name={user.name}
+          image={user.image}
           position={user.position || "..."}
           logout={onPressLogout}
         />
