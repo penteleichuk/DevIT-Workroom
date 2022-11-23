@@ -10,6 +10,14 @@ export const Storage = {
       return undefined;
     }
   },
+  async updateUser(params: UserType) {
+    try {
+      const jsonParams = JSON.stringify(params);
+      return await AsyncStorage.mergeItem("@User", jsonParams);
+    } catch (e) {
+      return undefined;
+    }
+  },
   async getUser() {
     try {
       const res = await AsyncStorage.getItem("@User");

@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import { View } from "react-native";
-import { ScreenContainer } from "../components";
+import { ActivityIndicator, View } from "react-native";
+import { AuthContainer, ScreenContainer } from "../components";
 import { RootStackParamList } from "../routes/Navigation";
 import { Database } from "../services/database";
 import { Storage } from "../services/storage";
@@ -23,7 +23,9 @@ export const InitializationScreen = ({
 
   return (
     <ScreenContainer>
-      <View></View>
+      <AuthContainer title="Loading">
+        <ActivityIndicator style={{ marginTop: "30%" }} size="large" />
+      </AuthContainer>
     </ScreenContainer>
   );
 };

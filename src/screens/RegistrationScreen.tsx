@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useCallback, useState } from "react";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,7 +16,8 @@ import {
 import { Demensions, Render } from "../helpers";
 import { registrationSchema } from "../validations/registration.validate";
 import { RootStackParamList } from "../routes/Navigation";
-import { Database } from "../services/database";
+import { Database, UserType } from "../services/database";
+import { Storage } from "../services/storage";
 
 type RegistrationScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -33,9 +34,7 @@ type RegSubmitType = {
 };
 
 export const RegistrationScreen = ({ navigation }: RegistrationScreenProps) => {
-  const onPressRegistration = useCallback(() => {
-    navigation.replace("Login");
-  }, []);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
@@ -49,17 +48,27 @@ export const RegistrationScreen = ({ navigation }: RegistrationScreenProps) => {
     resolver: yupResolver(registrationSchema),
   });
 
-  const onPressSubmit = (res: RegSubmitType) => {
+  const onPressRegistration = useCallback(() => {
+    navigation.replace("Login");
+  }, []);
+
+  const onPressSubmit = useCallback((res: RegSubmitType) => {
     const { confirmPassword, code, ...params } = res;
 
+    setIsLoading(true);
     Database.registration({ ...params })
       .then((res) => {
-        console.log(res);
+        Storage.setUser(res as UserType).then(() => {
+          navigation.replace("Profile");
+        });
       })
       .catch((err) => {
-        console.log(err);
+        Alert.alert("Message", err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  };
+  }, []);
 
   return (
     <ScreenContainer>
@@ -71,24 +80,36 @@ export const RegistrationScreen = ({ navigation }: RegistrationScreenProps) => {
             placeholder="Phone Number"
           />
           <CodeInput control={control} name={"code"} placeholder="Code" />
-          <TextInput control={control} name={"name"} placeholder="Your Name" />
+          <TextInput
+            control={control}
+            name={"name"}
+            editable={!isLoading}
+            placeholder="Your Name"
+          />
           <TextInput
             control={control}
             name={"email"}
+            editable={!isLoading}
             placeholder="Your Email"
           />
           <TextInputSecret
             control={control}
             name={"password"}
+            editable={!isLoading}
             placeholder="Password"
           />
           <TextInputSecret
             control={control}
             name={"confirmPassword"}
+            editable={!isLoading}
             placeholder="Confirm Password"
           />
           <View style={styles.action}>
-            <Button title="Next" onPress={handleSubmit(onPressSubmit)} />
+            <Button
+              title="Next"
+              disabled={isLoading}
+              onPress={handleSubmit(onPressSubmit)}
+            />
             <View style={styles.pressable}>
               <Text style={styles.pressableInfo}>Have Account? </Text>
               <PressableFade onPress={onPressRegistration}>

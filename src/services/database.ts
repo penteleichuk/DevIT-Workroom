@@ -12,7 +12,7 @@ export const Database = {
 
           resolve("success");
         },
-        (err) => {
+        () => {
           reject("error");
         }
       );
@@ -29,11 +29,11 @@ export const Database = {
               .then((res) => {
                 resolve(res);
               })
-              .catch((err) => {
-                reject(err);
+              .catch(() => {
+                reject("Email exists");
               });
           },
-          (_, err): boolean | any => reject(err)
+          (): boolean | any => reject("Email exists")
         );
       });
     });
@@ -47,7 +47,44 @@ export const Database = {
           (_, { rows: { _array } }) => {
             _array[0] ? resolve(_array[0]) : reject("Error password or email");
           },
-          (_, err): boolean | any => reject("Server error")
+          (): boolean | any => reject("Server error")
+        );
+      });
+    });
+  },
+  me(id: number) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM Users WHERE id = ? LIMIT 1",
+          [id],
+          (_, { rows: { _array } }) => {
+            _array[0] ? resolve(_array[0]) : reject("User not found");
+          },
+          (): boolean | any => reject("Server error")
+        );
+      });
+    });
+  },
+  update(id: number, params: UpdateRequestType) {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "UPDATE users SET name = ?, email = ?, phone = ?, position = ?, skype = ? WHERE id = ?",
+          [
+            params.name,
+            params.email,
+            params.phone,
+            params.position,
+            params.skype,
+            id,
+          ],
+          () => {
+            this.me(id).then((res) => {
+              resolve(res);
+            });
+          },
+          (): boolean | any => reject("Server error")
         );
       });
     });
@@ -70,4 +107,12 @@ export type RegistrationRequestType = {
   email: string;
   password: string;
   phone: string;
+};
+
+export type UpdateRequestType = {
+  name: string;
+  email: string;
+  phone: string;
+  position: string;
+  skype: string;
 };

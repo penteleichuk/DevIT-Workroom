@@ -6,7 +6,7 @@ import { Button, ProfileInfo, ScreenContainer, TextInput } from "../components";
 import { Demensions, Render } from "../helpers";
 import { userSchema } from "../validations/user.validate";
 import { Storage } from "../services/storage";
-import { UserType } from "../services/database";
+import { Database, UpdateRequestType, UserType } from "../services/database";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../routes/Navigation";
 
@@ -18,6 +18,13 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
 
   // HOOK form
   const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      position: "",
+      skype: "",
+    },
     resolver: yupResolver(userSchema),
   });
 
@@ -30,9 +37,15 @@ export const ProfileScreen = ({ navigation }: ProfileScreenProps) => {
   }, []);
 
   // Save user data
-  const onPressSubmit = useCallback((res: any) => {
-    console.log("submit", res);
-  }, []);
+  const onPressSubmit = useCallback(
+    (args: UpdateRequestType) => {
+      Database.update(user.id, { ...args }).then((res) => {
+        setUser({ ...(res as UserType) });
+        Storage.updateUser({ ...(res as UserType) });
+      });
+    },
+    [user]
+  );
 
   // Logout
   const onPressLogout = useCallback(() => {

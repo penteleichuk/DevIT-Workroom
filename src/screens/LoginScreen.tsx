@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import {
   AuthContainer,
   ScreenContainer,
@@ -20,7 +20,6 @@ import { Storage } from "../services/storage";
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
 
 export const LoginScreen = ({ navigation }: LoginScreenProps) => {
-  const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // HOOK form
@@ -40,7 +39,6 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
   // Log in
   const onPressSubmit = (res: LoginRequestType) => {
     setIsLoading(true);
-    setError("");
     Database.login({ ...res })
       .then((res) => {
         Storage.setUser(res as UserType).then(() => {
@@ -48,7 +46,7 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
         });
       })
       .catch((err) => {
-        setError(err);
+        Alert.alert("Message", err);
         resetField("password");
       })
       .finally(() => {
@@ -78,7 +76,6 @@ export const LoginScreen = ({ navigation }: LoginScreenProps) => {
         </View>
         {isLoading && <ActivityIndicator size="small" />}
         <View style={styles.action}>
-          {error && <Text>{error}</Text>}
           <Button
             title="Log In"
             disabled={isLoading}
