@@ -1,6 +1,6 @@
 import { ScreenContainer } from "./ScreenContainer/ScreenContainer";
 import { AuthContainer } from "./AuthContainer/AuthContainer";
-import { Button } from "./Button/Button";
+import { Button } from "./ButtonCustom/Button";
 import { TextInput } from "./TextInput/TextInput";
 import { TextInputSecret } from "./TextInputSecret/TextInputSecret";
 import { CodeInput } from "./CodeInput/CodeInput";
