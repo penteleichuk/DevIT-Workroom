@@ -7,7 +7,7 @@ import {
   TextInputSecret,
   Button,
   PressableFade,
-} from "../components";
+} from "./../components";
 import { useForm } from "react-hook-form";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -1,10 +1,10 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
 import { ActivityIndicator } from "react-native";
-import { AuthContainer, ScreenContainer } from "../components";
+import { AuthContainer, ScreenContainer } from "./../components";
 import { RootStackParamList } from "../routes/Navigation";
-import { Database } from "../services/database";
-import { Storage } from "../services/storage";
+import { Database } from "./../services/database";
+import { Storage } from "./../services/storage";
 
 type InitializationScreenProps = NativeStackScreenProps<
   RootStackParamList,

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Demensions } from "../../../helpers";
+import { Demensions } from "../../helpers";
 
 export const styles = StyleSheet.create({
   container: { flex: 1 },

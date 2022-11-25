@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Demensions, Render } from "../../../helpers";
+import { Demensions, Render } from "../../helpers";
 
 export const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: Render.COLOR_BACKGROUND },

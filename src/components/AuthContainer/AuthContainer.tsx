@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { styles } from "./AuthContainerStyle";
-import * as Icons from "./../../../assets/icons";
-import { Demensions } from "../../../helpers";
+import * as Icons from "../../assets/icons";
+import { Demensions } from "../../helpers";
 
 type AuthContainerType = {
   children: React.ReactNode;
